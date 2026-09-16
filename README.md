@@ -1,12 +1,14 @@
 # Odd 100 Bilhete — LP Esportiva
 
-LP de conversão máxima para campanha "Odd 100 na Esportiva". Redireciona o lead pro WhatsApp após ~1s de loading (garante o pageview + evento eventual do Pixel).
+LP de conversão máxima para campanha "Odd 100 na Esportiva", no mesmo formato da LP bilhete.mateuscaumo.com.br (topbar, hero com foto do Mateus, 3 passos, CTA fixo) em paleta laranja. Redireciona o lead pro WhatsApp após ~1s de loading (garante o pageview + evento Lead do Pixel).
 
 ## Stack
 
 - Next 15 (App Router)
 - Estática (deploy Vercel sem overhead)
 - CSS-in-JS via `styled-jsx` (nativo do Next)
+- Fontes Anton / Barlow / Russo One via `next/font/google` (baixadas no build, sem request externo em runtime)
+- Tela única sem rolagem: o hero é o único bloco elástico; em telas < 680px de altura as descrições dos passos e o texto legal somem
 - Sem Tailwind, sem lib de UI — máxima leveza
 
 ## ⚙️ Ajustar antes de deployar
@@ -14,16 +16,17 @@ LP de conversão máxima para campanha "Odd 100 na Esportiva". Redireciona o lea
 Abre `app/page.tsx` e edita as 3 constantes no topo:
 
 ```typescript
-const WHATSAPP_NUMERO = "5511999999999"; // ← teu número (E.164, sem +)
-const WHATSAPP_MENSAGEM = "Oi! Quero pegar a odd 100 da Esportiva 🎯";
+const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
 const LOADING_MS = 1000; // tempo do loading antes do redirect
 ```
+
+Pra trocar a foto do hero, substitua `public/caumo.webp` (900px de largura, recortada logo acima da cabeça).
 
 ## Como funciona
 
 1. Usuário chega na LP (tráfego pago Meta)
-2. Vê a headline gigante "ODD 100 no bilhete de hoje"
-3. Clica no botão laranja "QUERO PEGAR AGORA"
+2. Vê a foto do Mateus com a headline "BILHETE ODD 100 / TÁ LIBERADO" e os 3 passos
+3. Clica no botão laranja fixo "PEGAR O BILHETE NO WHATSAPP"
 4. Botão vira loading ("Preparando teu bilhete…") por 1s
 5. Redireciona pro `wa.me/[NUMERO]?text=[MENSAGEM]` — abre WhatsApp com msg pré-preenchida
 6. Comercial responde no WhatsApp, coleta dados e joga link do bilhete na casa (Esportiva)

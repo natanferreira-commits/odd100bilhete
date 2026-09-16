@@ -1,14 +1,48 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import { Anton, Barlow, Russo_One } from "next/font/google";
 import "./globals.css";
 
 // Meta Pixel — conta FREECAUMO (Mateus)
 const META_PIXEL_ID = "23904277939190271";
 
+const anton = Anton({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-anton",
+  display: "swap",
+});
+
+const barlow = Barlow({
+  weight: ["400", "600", "700", "800"],
+  subsets: ["latin"],
+  variable: "--font-barlow",
+  display: "swap",
+});
+
+const russo = Russo_One({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-russo",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
-  title: "ODD 100 · Esportiva Bet",
-  description: "Odd 100 liberada por tempo limitado. Clique e pegue seu bilhete.",
+  title: "Bilhete Odd 100 do Caumo · Liberado",
+  description:
+    "O bilhete odd 100 do Mateus Caumo, liberado no WhatsApp. Grátis. +18. Aposte com responsabilidade.",
   robots: { index: false, follow: false },
+  formatDetection: { telephone: false },
+  icons: {
+    icon: "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ctext y='.9em' font-size='90'%3E🎟️%3C/text%3E%3C/svg%3E",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  viewportFit: "cover",
+  themeColor: "#0b0906",
 };
 
 export default function RootLayout({
@@ -17,11 +51,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="pt-BR">
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-        <meta name="theme-color" content="#0a0a0a" />
-      </head>
+    <html
+      lang="pt-BR"
+      className={`${anton.variable} ${barlow.variable} ${russo.variable}`}
+    >
       <body>
         {/* Meta Pixel — base code */}
         <Script id="meta-pixel" strategy="afterInteractive">

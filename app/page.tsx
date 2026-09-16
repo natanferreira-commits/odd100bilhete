@@ -15,6 +15,17 @@ const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
 const LOADING_MS = 1000; // tempo do loading antes de redirecionar
 // ============================================================
 
+function WhatsIcon() {
+  return (
+    <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
+      <path
+        fill="currentColor"
+        d="M12 2A9.9 9.9 0 0 0 2.05 11.9c0 1.75.46 3.45 1.34 4.96L2 22l5.3-1.38a10 10 0 0 0 4.7 1.19h.01A9.95 9.95 0 0 0 22 11.9 9.9 9.9 0 0 0 12 2Zm5.83 14.12c-.25.69-1.44 1.32-1.99 1.4-.51.08-1.15.11-1.86-.12-.43-.13-.98-.31-1.68-.61-2.96-1.28-4.89-4.25-5.04-4.45-.15-.2-1.2-1.6-1.2-3.05 0-1.45.76-2.16 1.03-2.46.27-.29.59-.37.78-.37h.56c.18.01.42-.07.66.5.25.59.84 2.04.91 2.19.07.15.12.32.02.52-.1.2-.15.32-.29.5-.15.17-.31.39-.44.52-.15.15-.3.31-.13.6.17.29.75 1.24 1.62 2.01 1.11.99 2.05 1.3 2.34 1.45.29.15.46.12.63-.07.17-.2.73-.85.92-1.14.2-.29.39-.24.66-.15.27.1 1.71.81 2 .96.29.15.49.22.56.34.07.12.07.72-.18 1.41Z"
+      />
+    </svg>
+  );
+}
+
 export default function Page() {
   const [loading, setLoading] = useState(false);
 
@@ -24,7 +35,7 @@ export default function Page() {
 
     // Dispara evento Lead no Meta Pixel antes do redirect
     if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead");
+      window.fbq("track", "Lead", { content_name: "Bilhete Odd 100 WhatsApp" });
     }
 
     setTimeout(() => {
@@ -33,34 +44,78 @@ export default function Page() {
   };
 
   return (
-    <main className="page">
-      <div className="container">
-        {/* Selo topo */}
-        <div className="tag">
-          <span className="pulse-dot" />
-          LIBERADO AGORA
-        </div>
+    <div className="wrap">
+      {/* Topbar */}
+      <div className="topbar">
+        <span className="live" /> Bilhete odd 100 já está no WhatsApp
+      </div>
 
-        {/* Headline */}
-        <h1 className="headline">
-          ODD <span className="odd-value">100</span>
-          <span className="headline-sub">no bilhete de hoje</span>
-        </h1>
-
-        {/* Print do bilhete Esportiva */}
-        <div className="bilhete">
+      {/* Hero elástico com a foto do Mateus */}
+      <header className="hero">
+        <div className="hero-bg">
           <img
-            src="/bilhete.jpeg"
-            alt="Bilhete Esportiva Bet — Atlético-MG x Santos, cotação 100,15"
-            className="bilhete-img"
+            src="/caumo.webp"
+            alt="Mateus Caumo, analista esportivo"
+            fetchPriority="high"
+            decoding="async"
           />
         </div>
+        <div className="hero-inner">
+          <h1>
+            BILHETE ODD 100
+            <br />
+            <span className="hl">TÁ LIBERADO</span>
+          </h1>
+        </div>
+      </header>
 
-        {/* CTA */}
+      {/* Passo a passo */}
+      <section className="sec" aria-label="Como pegar o bilhete em 3 passos">
+        <h2 className="sec-t">Como pegar em 3 passos</h2>
+        <ol className="steps">
+          <li className="step">
+            <span className="n" aria-hidden="true">1</span>
+            <span className="tx">
+              <b>Chame no WhatsApp</b>
+              <span>Toque no botão aqui embaixo e fale com a equipe do Caumo.</span>
+            </span>
+          </li>
+          <li className="step">
+            <span className="n" aria-hidden="true">2</span>
+            <span className="tx">
+              <b>Crie sua conta na EsportivaBet</b>
+              <span>A equipe te manda o link. O cadastro é rápido e você faz pelo celular.</span>
+            </span>
+          </li>
+          <li className="step prize">
+            <span className="n" aria-hidden="true">3</span>
+            <span className="tx">
+              <b>Pegue o bilhete odd 100 pronto</b>
+              <span>Você recebe o bilhete já montado, com todas as seleções. É só copiar.</span>
+            </span>
+          </li>
+        </ol>
+
+        <p className="responsible">
+          <span className="age">+18</span> Aposte com responsabilidade
+        </p>
+
+        <p className="footer">
+          Apostas são destinadas a maiores de 18 anos e podem causar dependência.
+          Não são fonte de renda nem solução para problemas financeiros. Nunca
+          aposte valores que não pode perder. Conteúdo informativo, sem garantia de
+          resultados. Odds sujeitas a alteração pela casa. Site não afiliado ao
+          Facebook, Instagram ou Meta Platforms, Inc.
+        </p>
+      </section>
+
+      {/* CTA — última faixa, sempre visível sem rolar */}
+      <div className="cta-bar">
         <button
           className={`cta ${loading ? "loading" : ""}`}
           onClick={handleClick}
           disabled={loading}
+          aria-label="Falar no WhatsApp e pegar o bilhete"
         >
           {loading ? (
             <>
@@ -69,232 +124,310 @@ export default function Page() {
             </>
           ) : (
             <>
-              <span>QUERO PEGAR AGORA</span>
-              <span className="arrow">→</span>
+              <WhatsIcon />
+              <span>Pegar o bilhete no WhatsApp</span>
             </>
           )}
         </button>
-
-        {/* Micro reforço */}
-        <p className="micro">
-          ⚡ Vaga limitada · Liberado por tempo curto
-        </p>
+        <span className="cta-legal">Grátis · +18 · Aposte com responsabilidade</span>
       </div>
 
-      {/* Footer compliance */}
-      <footer className="footer">
-        +18 · Aposte com responsabilidade · Ministério da Fazenda adverte:
-        aposta não é investimento.
-      </footer>
-
       <style jsx>{`
-        .page {
-          min-height: 100dvh;
-          background:
-            radial-gradient(1200px 600px at 50% -10%, rgba(255, 106, 0, 0.25), transparent 60%),
-            radial-gradient(800px 400px at 50% 110%, rgba(255, 106, 0, 0.15), transparent 60%),
-            #0a0a0a;
+        /* A tela inteira é uma coluna que cabe no viewport, sem rolagem.
+           O hero é o único elemento elástico: ele absorve a sobra. */
+        .wrap {
+          max-width: 480px;
+          margin: 0 auto;
+          height: 100vh;
+          height: 100svh;
           display: flex;
           flex-direction: column;
-          align-items: center;
-          justify-content: space-between;
-          padding: 32px 20px 24px;
+          overflow: hidden;
+        }
+        .wrap > * {
+          flex: 0 0 auto;
         }
 
-        .container {
-          flex: 1;
+        /* Topbar */
+        .topbar {
           display: flex;
-          flex-direction: column;
           align-items: center;
           justify-content: center;
-          width: 100%;
-          max-width: 480px;
-          text-align: center;
-          gap: 24px;
-        }
-
-        .tag {
-          display: inline-flex;
-          align-items: center;
           gap: 8px;
-          padding: 8px 14px;
-          border-radius: 999px;
-          background: rgba(255, 106, 0, 0.15);
-          border: 1px solid rgba(255, 106, 0, 0.4);
-          color: #ffb380;
-          font-size: 11px;
+          min-height: 36px;
+          padding: 8px 16px;
+          background: rgba(11, 9, 6, 0.9);
+          border-bottom: 1px solid var(--border);
+          font-size: 12.5px;
           font-weight: 700;
-          letter-spacing: 0.12em;
-          text-transform: uppercase;
+          letter-spacing: 0.03em;
+          color: var(--text);
+          text-align: center;
         }
-
-        .pulse-dot {
+        .live {
           width: 8px;
           height: 8px;
           border-radius: 50%;
-          background: #ff6a00;
-          box-shadow: 0 0 12px #ff6a00;
-          animation: pulse 1.5s ease-in-out infinite;
+          background: var(--orange);
+          flex-shrink: 0;
+          box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.6);
+          animation: ping 1.6s cubic-bezier(0, 0, 0.2, 1) infinite;
+        }
+        @keyframes ping {
+          0% { box-shadow: 0 0 0 0 rgba(255, 106, 0, 0.55); }
+          70% { box-shadow: 0 0 0 9px rgba(255, 106, 0, 0); }
+          100% { box-shadow: 0 0 0 0 rgba(255, 106, 0, 0); }
         }
 
-        @keyframes pulse {
-          0%, 100% { opacity: 1; transform: scale(1); }
-          50% { opacity: 0.5; transform: scale(1.2); }
-        }
-
-        .headline {
-          font-size: clamp(48px, 12vw, 84px);
-          font-weight: 900;
-          line-height: 0.95;
-          letter-spacing: -0.03em;
-          color: #fff;
-          text-shadow: 0 4px 20px rgba(0,0,0,0.5);
-        }
-
-        .odd-value {
-          display: inline-block;
-          color: #ff6a00;
-          text-shadow:
-            0 0 20px rgba(255, 106, 0, 0.6),
-            0 0 40px rgba(255, 106, 0, 0.3);
-        }
-
-        .headline-sub {
-          display: block;
-          font-size: clamp(18px, 4.5vw, 24px);
-          font-weight: 600;
-          color: #d4d4d4;
-          margin-top: 12px;
-          letter-spacing: -0.01em;
-        }
-
-        .bilhete {
-          width: 100%;
-          max-width: 340px;
-          border-radius: 18px;
-          overflow: hidden;
-          background: #fff;
-          box-shadow:
-            0 20px 40px rgba(0, 0, 0, 0.5),
-            0 0 0 3px rgba(255, 106, 0, 0.5),
-            0 0 40px rgba(255, 106, 0, 0.35);
-          margin: 4px 0;
-          animation: bilhete-in 0.6s ease-out 0.1s both;
-        }
-
-        .bilhete-img {
-          display: block;
-          width: 100%;
-          height: auto;
-        }
-
-        @keyframes bilhete-in {
-          from {
-            opacity: 0;
-            transform: translateY(20px) scale(0.96);
-          }
-          to {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-          }
-        }
-
-        .cta {
-          width: 100%;
-          padding: 22px 28px;
-          border-radius: 16px;
-          background: linear-gradient(180deg, #ff8524 0%, #ff6a00 100%);
-          color: #0a0a0a;
-          font-size: 18px;
-          font-weight: 800;
-          letter-spacing: 0.02em;
-          text-transform: uppercase;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          gap: 12px;
-          box-shadow:
-            0 8px 24px rgba(255, 106, 0, 0.35),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
-          transition: transform 0.15s ease, box-shadow 0.15s ease;
+        /* Hero elástico */
+        .wrap > .hero {
+          flex: 1 1 auto;
+          min-height: 132px;
           position: relative;
           overflow: hidden;
+          text-align: center;
+          display: flex;
+          flex-direction: column;
+          justify-content: flex-end;
+          padding: 0 20px 20px;
         }
-
-        .cta::before {
+        .hero-bg {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+        }
+        .hero-bg img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          object-position: top center;
+          opacity: 0.95;
+        }
+        .hero-bg::after {
           content: "";
           position: absolute;
           inset: 0;
-          background: linear-gradient(
-            110deg,
-            transparent 30%,
-            rgba(255, 255, 255, 0.35) 50%,
-            transparent 70%
-          );
-          transform: translateX(-100%);
-          animation: shine 2.6s ease-in-out infinite;
+          background:
+            radial-gradient(70% 50% at 50% 45%, rgba(255, 106, 0, 0.18), transparent 70%),
+            linear-gradient(
+              180deg,
+              rgba(11, 9, 6, 0.25) 0%,
+              rgba(11, 9, 6, 0.4) 40%,
+              rgba(11, 9, 6, 0.9) 80%,
+              var(--bg) 100%
+            );
+        }
+        .hero-inner {
+          position: relative;
+          z-index: 1;
+        }
+        h1 {
+          font-family: var(--font-anton), Impact, sans-serif;
+          font-weight: 400;
+          font-size: clamp(26px, 8.4vw, 42px);
+          line-height: 1;
+          letter-spacing: 0.01em;
+          text-transform: uppercase;
+          text-shadow: 0 2px 12px rgba(0, 0, 0, 0.6);
+        }
+        h1 .hl {
+          color: var(--orange);
+          text-shadow: 0 0 22px rgba(255, 106, 0, 0.45);
         }
 
-        @keyframes shine {
-          0%, 100% { transform: translateX(-100%); }
-          40%, 60% { transform: translateX(100%); }
+        /* Passo a passo */
+        .sec {
+          padding: 0 16px;
         }
-
-        .cta:active:not(:disabled) {
-          transform: scale(0.98);
-          box-shadow:
-            0 4px 12px rgba(255, 106, 0, 0.3),
-            inset 0 1px 0 rgba(255, 255, 255, 0.3);
+        .sec-t {
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          text-transform: uppercase;
+          color: var(--muted);
+          text-align: center;
+          margin-bottom: 10px;
         }
-
-        .cta.loading {
-          background: linear-gradient(180deg, #444 0%, #2a2a2a 100%);
-          color: #fff;
-          cursor: wait;
-          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        .steps {
+          list-style: none;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
         }
-
-        .cta.loading::before {
+        .step {
+          position: relative;
+          display: flex;
+          align-items: flex-start;
+          gap: 12px;
+          background: var(--card);
+          border: 1px solid var(--border);
+          border-radius: 13px;
+          padding: 11px 13px;
+        }
+        /* linha ligando um passo no outro */
+        .step::after {
+          content: "";
+          position: absolute;
+          left: 26px;
+          top: 100%;
+          width: 2px;
+          height: 10px;
+          background: linear-gradient(180deg, rgba(255, 106, 0, 0.35), rgba(255, 106, 0, 0.06));
+        }
+        .step:last-child::after {
           display: none;
         }
-
-        .arrow {
-          font-size: 22px;
+        .n {
+          flex-shrink: 0;
+          width: 28px;
+          height: 28px;
+          border-radius: 50%;
+          display: grid;
+          place-items: center;
+          background: rgba(255, 106, 0, 0.14);
+          border: 1px solid var(--border);
+          color: var(--orange);
+          font-family: var(--font-russo), sans-serif;
+          font-size: 13px;
           line-height: 1;
         }
+        .tx {
+          min-width: 0;
+        }
+        .tx b {
+          display: block;
+          font-size: 14.5px;
+          font-weight: 700;
+          line-height: 1.2;
+        }
+        .tx span {
+          display: block;
+          font-size: 12px;
+          line-height: 1.3;
+          color: var(--muted);
+          margin-top: 2px;
+        }
+        /* último passo = a recompensa, destacado em dourado */
+        .step.prize {
+          border-color: rgba(255, 197, 61, 0.35);
+          background: linear-gradient(180deg, #1f1708 0%, #1a120a 100%);
+        }
+        .step.prize .n {
+          background: rgba(255, 197, 61, 0.16);
+          border-color: rgba(255, 197, 61, 0.35);
+          color: var(--gold);
+        }
+        .step.prize .tx b {
+          color: var(--gold);
+        }
 
+        /* Responsável / footer */
+        .responsible {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 7px;
+          margin-top: 12px;
+          font-size: 12px;
+          font-weight: 700;
+          color: var(--muted);
+        }
+        .age {
+          display: inline-grid;
+          place-items: center;
+          min-width: 28px;
+          height: 20px;
+          padding: 0 6px;
+          border-radius: 6px;
+          background: #c62828;
+          color: #fff;
+          font-weight: 800;
+          font-size: 11px;
+        }
+        .footer {
+          font-size: 8.5px;
+          line-height: 1.35;
+          color: #5a5049;
+          text-align: center;
+          padding: 8px 16px 0;
+        }
+
+        /* CTA — última faixa da coluna, sempre visível sem rolar */
+        .cta-bar {
+          margin-top: auto;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 5px;
+          padding: 10px 16px calc(10px + env(safe-area-inset-bottom));
+          background: rgba(11, 9, 6, 0.94);
+          border-top: 1px solid var(--border);
+          box-shadow: 0 -10px 30px rgba(0, 0, 0, 0.5);
+        }
+        .cta {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 10px;
+          white-space: nowrap;
+          width: 100%;
+          min-height: 56px;
+          padding: 15px 18px;
+          background: linear-gradient(180deg, #ff8524 0%, var(--orange) 60%, var(--orange-2) 100%);
+          color: #1a0b00;
+          font: 800 clamp(15px, 4.4vw, 18px) / 1 var(--font-barlow), sans-serif;
+          letter-spacing: 0.02em;
+          text-transform: uppercase;
+          border-radius: 14px;
+          box-shadow: 0 10px 30px rgba(255, 106, 0, 0.4);
+          touch-action: manipulation;
+          user-select: none;
+          animation: breathe 2.2s ease-in-out infinite;
+        }
+        .cta:active:not(:disabled) {
+          transform: scale(0.99);
+          filter: brightness(0.97);
+        }
+        @keyframes breathe {
+          0%, 100% { box-shadow: 0 10px 30px rgba(255, 106, 0, 0.4); transform: translateY(0); }
+          50% { box-shadow: 0 14px 42px rgba(255, 106, 0, 0.6); transform: translateY(-2px); }
+        }
+        .cta.loading {
+          background: linear-gradient(180deg, #3a2a1c 0%, #221810 100%);
+          color: var(--text);
+          cursor: wait;
+          animation: none;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
+        }
         .spinner {
           width: 20px;
           height: 20px;
-          border: 2.5px solid rgba(255, 255, 255, 0.3);
-          border-top-color: #ff6a00;
+          border: 2.5px solid rgba(255, 255, 255, 0.25);
+          border-top-color: var(--orange);
           border-radius: 50%;
           animation: spin 0.7s linear infinite;
         }
-
         @keyframes spin {
           to { transform: rotate(360deg); }
         }
-
-        .micro {
-          font-size: 12px;
-          color: #808080;
-          font-weight: 600;
-          letter-spacing: 0.05em;
+        .cta-legal {
+          font-size: 10.5px;
+          color: var(--dim);
+          text-align: center;
         }
 
-        .footer {
-          font-size: 10px;
-          color: #666;
-          text-align: center;
-          line-height: 1.5;
-          max-width: 480px;
-          padding-top: 24px;
-          border-top: 1px solid #1f1f1f;
-          margin-top: 24px;
-          width: 100%;
+        @media (prefers-reduced-motion: reduce) {
+          .cta, .live { animation: none; }
+        }
+
+        /* Telas curtas: aperta o texto de apoio pra tudo continuar cabendo */
+        @media (max-height: 680px) {
+          .tx span { display: none; }
+          .step { padding: 10px 13px; }
+          .footer { display: none; }
+          .responsible { margin-top: 10px; }
         }
       `}</style>
-    </main>
+    </div>
   );
 }
