@@ -32,7 +32,7 @@ export default function Page() {
         {/* Selo topo */}
         <div className="tag">
           <span className="pulse-dot" />
-          LIBERADO AGORA — ESPORTIVA
+          LIBERADO AGORA
         </div>
 
         {/* Headline */}
@@ -41,12 +41,18 @@ export default function Page() {
           <span className="headline-sub">no bilhete de hoje</span>
         </h1>
 
-        {/* Subheadline */}
-        <p className="sub">
-          Cadastro rápido pelo WhatsApp.
-          <br />
-          Bilhete pronto direto no chat.
-        </p>
+        {/* Placeholder do print do bilhete */}
+        {/* SUBSTITUIR pelo <img src="/bilhete.png" alt="Bilhete" /> quando tiver a arte */}
+        <div className="bilhete-placeholder">
+          <div className="bilhete-placeholder-inner">
+            <span className="bilhete-placeholder-icon">🖼️</span>
+            <span className="bilhete-placeholder-text">
+              PRINT DO BILHETE
+              <br />
+              <small>substituir aqui</small>
+            </span>
+          </div>
+        </div>
 
         {/* CTA */}
         <button
@@ -160,11 +166,50 @@ export default function Page() {
           letter-spacing: -0.01em;
         }
 
-        .sub {
-          font-size: 16px;
-          color: #b8b8b8;
-          line-height: 1.5;
+        .bilhete-placeholder {
+          width: 100%;
+          max-width: 320px;
+          aspect-ratio: 3 / 4;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.02);
+          border: 2px dashed rgba(255, 106, 0, 0.35);
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          overflow: hidden;
+          margin: 4px 0;
+        }
+
+        .bilhete-placeholder-inner {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 12px;
+          text-align: center;
+          padding: 20px;
+        }
+
+        .bilhete-placeholder-icon {
+          font-size: 42px;
+          opacity: 0.6;
+        }
+
+        .bilhete-placeholder-text {
+          font-size: 12px;
+          font-weight: 700;
+          letter-spacing: 0.14em;
+          color: rgba(255, 106, 0, 0.7);
+          line-height: 1.6;
+        }
+
+        .bilhete-placeholder-text small {
+          display: block;
+          font-size: 10px;
           font-weight: 500;
+          letter-spacing: 0.06em;
+          color: rgba(255, 255, 255, 0.35);
+          margin-top: 4px;
+          text-transform: none;
         }
 
         .cta {
