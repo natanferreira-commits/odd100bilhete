@@ -77,20 +77,20 @@ export default function Page() {
             <span className="n" aria-hidden="true">1</span>
             <span className="tx">
               <b>Chame no WhatsApp</b>
-              <span>Toque no botão aqui embaixo e fale com a equipe do Caumo.</span>
+              <span>Toque no botão aqui embaixo. É grátis e leva segundos.</span>
             </span>
           </li>
           <li className="step">
             <span className="n" aria-hidden="true">2</span>
             <span className="tx">
-              <b>Crie sua conta na EsportivaBet</b>
-              <span>A equipe te manda o link. O cadastro é rápido e você faz pelo celular.</span>
+              <b>Peça o bilhete odd 100</b>
+              <span>A equipe do Caumo te responde na hora com o bilhete do dia.</span>
             </span>
           </li>
           <li className="step prize">
             <span className="n" aria-hidden="true">3</span>
             <span className="tx">
-              <b>Pegue o bilhete odd 100 pronto</b>
+              <b>Copie e aposte</b>
               <span>Você recebe o bilhete já montado, com todas as seleções. É só copiar.</span>
             </span>
           </li>
@@ -98,6 +98,9 @@ export default function Page() {
 
         <p className="responsible">
           <span className="age">+18</span> Aposte com responsabilidade
+        </p>
+        <p className="fazenda">
+          O Ministério da Fazenda adverte: aposta não é investimento.
         </p>
 
         <p className="footer">
@@ -201,19 +204,19 @@ export default function Page() {
           height: 100%;
           object-fit: cover;
           object-position: top center;
-          opacity: 0.95;
+          opacity: 1;
         }
         .hero-bg::after {
           content: "";
           position: absolute;
           inset: 0;
           background:
-            radial-gradient(70% 50% at 50% 45%, rgba(255, 106, 0, 0.18), transparent 70%),
+            radial-gradient(70% 50% at 50% 45%, rgba(255, 106, 0, 0.1), transparent 70%),
             linear-gradient(
               180deg,
-              rgba(11, 9, 6, 0.25) 0%,
-              rgba(11, 9, 6, 0.4) 40%,
-              rgba(11, 9, 6, 0.9) 80%,
+              rgba(11, 9, 6, 0.05) 0%,
+              rgba(11, 9, 6, 0.12) 45%,
+              rgba(11, 9, 6, 0.75) 80%,
               var(--bg) 100%
             );
         }
@@ -344,6 +347,14 @@ export default function Page() {
           font-weight: 800;
           font-size: 11px;
         }
+        .fazenda {
+          margin-top: 6px;
+          font-size: 10.5px;
+          font-weight: 600;
+          line-height: 1.3;
+          color: var(--muted);
+          text-align: center;
+        }
         .footer {
           font-size: 8.5px;
           line-height: 1.35;
@@ -426,6 +437,7 @@ export default function Page() {
           .step { padding: 10px 13px; }
           .footer { display: none; }
           .responsible { margin-top: 10px; }
+          .fazenda { margin-top: 4px; }
         }
       `}</style>
     </div>
