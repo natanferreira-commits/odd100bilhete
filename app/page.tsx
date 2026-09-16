@@ -11,15 +11,13 @@ declare global {
 // ============================================================
 // CONFIG — Ajustar antes de deployar
 // ============================================================
-const WHATSAPP_NUMERO = "559180194075"; // E.164, sem +
-
-// 4 ofertas em teste. Cada lead cai em UMA delas (25% cada) e a mensagem
-// pré-preenchida é o gatilho do fluxo na automação. Mantém as 4 distintas.
+// 4 ofertas em teste. Cada lead cai em UMA delas (25% cada). Cada link
+// abre o WhatsApp com uma mensagem diferente, que é o gatilho do fluxo.
 const OFERTAS = [
-  { id: 1, mensagem: "QUERO O BILHETE 1" },
-  { id: 2, mensagem: "QUERO O BILHETE 2" },
-  { id: 3, mensagem: "QUERO O BILHETE 3" },
-  { id: 4, mensagem: "QUERO O BILHETE 4" },
+  { id: 1, link: "https://wa.link/s8vnpg" },
+  { id: 2, link: "https://wa.link/hgodgk" },
+  { id: 3, link: "https://wa.link/tggx72" },
+  { id: 4, link: "https://wa.link/huy6or" },
 ];
 
 const LOADING_MS = 1000; // tempo do loading antes de redirecionar
@@ -54,10 +52,6 @@ function escolherOferta(): Oferta {
   return sorteada;
 }
 
-function montarLink(oferta: Oferta) {
-  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(oferta.mensagem)}`;
-}
-
 function WhatsIcon() {
   return (
     <svg width="22" height="22" viewBox="0 0 24 24" aria-hidden="true">
@@ -77,7 +71,7 @@ export default function Page() {
     setLoading(true);
 
     const oferta = escolherOferta();
-    const url = montarLink(oferta);
+    const url = oferta.link;
 
     // Dispara evento Lead no Meta Pixel antes do redirect, com a oferta
     // sorteada, pra dar pra quebrar o resultado por oferta no Gerenciador

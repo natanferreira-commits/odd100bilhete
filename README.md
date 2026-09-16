@@ -16,19 +16,18 @@ LP de conversão máxima para campanha "Odd 100 na Esportiva", no mesmo formato 
 Abre `app/page.tsx` e edita as 3 constantes no topo:
 
 ```typescript
-const WHATSAPP_NUMERO = "559180194075"; // E.164, sem +
 const OFERTAS = [
-  { id: 1, mensagem: "QUERO O BILHETE 1" },
-  { id: 2, mensagem: "QUERO O BILHETE 2" },
-  { id: 3, mensagem: "QUERO O BILHETE 3" },
-  { id: 4, mensagem: "QUERO O BILHETE 4" },
+  { id: 1, link: "https://wa.link/s8vnpg" },
+  { id: 2, link: "https://wa.link/hgodgk" },
+  { id: 3, link: "https://wa.link/tggx72" },
+  { id: 4, link: "https://wa.link/huy6or" },
 ];
 const LOADING_MS = 1000; // tempo do loading antes do redirect
 ```
 
 ## Teste de 4 ofertas (split 25% cada)
 
-A mensagem pré-preenchida do WhatsApp é o gatilho do fluxo na automação. A LP distribui os leads assim:
+Cada link wa.link abre o WhatsApp com uma mensagem diferente, que é o gatilho do fluxo na automação. A LP distribui os leads assim:
 
 1. `?oferta=N` na URL força a oferta N (pra testar cada fluxo)
 2. Se o navegador já sorteou antes, repete a mesma oferta (`localStorage`, chave `odd100_oferta`)
