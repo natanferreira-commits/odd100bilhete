@@ -5,8 +5,7 @@ import { useState } from "react";
 // ============================================================
 // CONFIG — Ajustar antes de deployar
 // ============================================================
-const WHATSAPP_NUMERO = "5511999999999"; // formato E.164, sem + nem espaços
-const WHATSAPP_MENSAGEM = "Oi! Quero pegar a odd 100 da Esportiva 🎯";
+const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
 const LOADING_MS = 1000; // tempo do loading antes de redirecionar
 // ============================================================
 
@@ -17,12 +16,8 @@ export default function Page() {
     if (loading) return;
     setLoading(true);
 
-    const url = `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(
-      WHATSAPP_MENSAGEM
-    )}`;
-
     setTimeout(() => {
-      window.location.href = url;
+      window.location.href = WHATSAPP_URL;
     }, LOADING_MS);
   };
 
