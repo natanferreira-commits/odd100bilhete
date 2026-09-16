@@ -2,6 +2,12 @@
 
 import { useState } from "react";
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
 // ============================================================
 // CONFIG — Ajustar antes de deployar
 // ============================================================
@@ -15,6 +21,11 @@ export default function Page() {
   const handleClick = () => {
     if (loading) return;
     setLoading(true);
+
+    // Dispara evento Lead no Meta Pixel antes do redirect
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Lead");
+    }
 
     setTimeout(() => {
       window.location.href = WHATSAPP_URL;
