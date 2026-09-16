@@ -41,17 +41,13 @@ export default function Page() {
           <span className="headline-sub">no bilhete de hoje</span>
         </h1>
 
-        {/* Placeholder do print do bilhete */}
-        {/* SUBSTITUIR pelo <img src="/bilhete.png" alt="Bilhete" /> quando tiver a arte */}
-        <div className="bilhete-placeholder">
-          <div className="bilhete-placeholder-inner">
-            <span className="bilhete-placeholder-icon">🖼️</span>
-            <span className="bilhete-placeholder-text">
-              PRINT DO BILHETE
-              <br />
-              <small>substituir aqui</small>
-            </span>
-          </div>
+        {/* Print do bilhete Esportiva */}
+        <div className="bilhete">
+          <img
+            src="/bilhete.jpeg"
+            alt="Bilhete Esportiva Bet — Atlético-MG x Santos, cotação 100,15"
+            className="bilhete-img"
+          />
         </div>
 
         {/* CTA */}
@@ -166,50 +162,35 @@ export default function Page() {
           letter-spacing: -0.01em;
         }
 
-        .bilhete-placeholder {
+        .bilhete {
           width: 100%;
-          max-width: 320px;
-          aspect-ratio: 3 / 4;
-          border-radius: 16px;
-          background: rgba(255, 255, 255, 0.02);
-          border: 2px dashed rgba(255, 106, 0, 0.35);
-          display: flex;
-          align-items: center;
-          justify-content: center;
+          max-width: 340px;
+          border-radius: 18px;
           overflow: hidden;
+          background: #fff;
+          box-shadow:
+            0 20px 40px rgba(0, 0, 0, 0.5),
+            0 0 0 3px rgba(255, 106, 0, 0.5),
+            0 0 40px rgba(255, 106, 0, 0.35);
           margin: 4px 0;
+          animation: bilhete-in 0.6s ease-out 0.1s both;
         }
 
-        .bilhete-placeholder-inner {
-          display: flex;
-          flex-direction: column;
-          align-items: center;
-          gap: 12px;
-          text-align: center;
-          padding: 20px;
-        }
-
-        .bilhete-placeholder-icon {
-          font-size: 42px;
-          opacity: 0.6;
-        }
-
-        .bilhete-placeholder-text {
-          font-size: 12px;
-          font-weight: 700;
-          letter-spacing: 0.14em;
-          color: rgba(255, 106, 0, 0.7);
-          line-height: 1.6;
-        }
-
-        .bilhete-placeholder-text small {
+        .bilhete-img {
           display: block;
-          font-size: 10px;
-          font-weight: 500;
-          letter-spacing: 0.06em;
-          color: rgba(255, 255, 255, 0.35);
-          margin-top: 4px;
-          text-transform: none;
+          width: 100%;
+          height: auto;
+        }
+
+        @keyframes bilhete-in {
+          from {
+            opacity: 0;
+            transform: translateY(20px) scale(0.96);
+          }
+          to {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+          }
         }
 
         .cta {
