@@ -70,8 +70,8 @@ export default function Page() {
       </header>
 
       {/* Passo a passo */}
-      <section className="sec" aria-label="Como pegar o bilhete em 3 passos">
-        <h2 className="sec-t">Como pegar em 3 passos</h2>
+      <section className="sec" aria-label="Como pegar o bilhete em 2 passos">
+        <h2 className="sec-t">Como pegar em 2 passos</h2>
         <ol className="steps">
           <li className="step">
             <span className="n" aria-hidden="true">1</span>
@@ -80,18 +80,11 @@ export default function Page() {
               <span>Toque no botão aqui embaixo. É grátis e leva segundos.</span>
             </span>
           </li>
-          <li className="step">
+          <li className="step prize">
             <span className="n" aria-hidden="true">2</span>
             <span className="tx">
-              <b>Peça o bilhete odd 100</b>
-              <span>A equipe do Caumo te responde na hora com o bilhete do dia.</span>
-            </span>
-          </li>
-          <li className="step prize">
-            <span className="n" aria-hidden="true">3</span>
-            <span className="tx">
-              <b>Copie e aposte</b>
-              <span>Você recebe o bilhete já montado, com todas as seleções. É só copiar.</span>
+              <b>Copie o bilhete</b>
+              <span>A equipe do Caumo te manda o bilhete já montado, com todas as seleções.</span>
             </span>
           </li>
         </ol>
@@ -132,7 +125,6 @@ export default function Page() {
             </>
           )}
         </button>
-        <span className="cta-legal">Grátis · +18 · Aposte com responsabilidade</span>
       </div>
 
       <style jsx>{`
@@ -420,11 +412,6 @@ export default function Page() {
         }
         @keyframes spin {
           to { transform: rotate(360deg); }
-        }
-        .cta-legal {
-          font-size: 10.5px;
-          color: var(--dim);
-          text-align: center;
         }
 
         @media (prefers-reduced-motion: reduce) {
