@@ -16,9 +16,25 @@ LP de conversão máxima para campanha "Odd 100 na Esportiva", no mesmo formato 
 Abre `app/page.tsx` e edita as 3 constantes no topo:
 
 ```typescript
-const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
+const WHATSAPP_NUMERO = "559180194075"; // E.164, sem +
+const OFERTAS = [
+  { id: 1, mensagem: "QUERO O BILHETE 1" },
+  { id: 2, mensagem: "QUERO O BILHETE 2" },
+  { id: 3, mensagem: "QUERO O BILHETE 3" },
+  { id: 4, mensagem: "QUERO O BILHETE 4" },
+];
 const LOADING_MS = 1000; // tempo do loading antes do redirect
 ```
+
+## Teste de 4 ofertas (split 25% cada)
+
+A mensagem pré-preenchida do WhatsApp é o gatilho do fluxo na automação. A LP distribui os leads assim:
+
+1. `?oferta=N` na URL força a oferta N (pra testar cada fluxo)
+2. Se o navegador já sorteou antes, repete a mesma oferta (`localStorage`, chave `odd100_oferta`)
+3. Senão sorteia uma das 4 com chance igual e grava
+
+O evento `Lead` do Pixel vai com `content_name: "Bilhete Odd 100 - Oferta N"` e `content_category: "oferta_N"`, então dá pra quebrar por oferta no Gerenciador. O sorteio é no navegador: ao longo do volume converge pra 25% cada, mas não é uma fila exata.
 
 Pra trocar a foto do hero, substitua `public/caumo.webp` (900px de largura, recortada logo acima da cabeça).
 

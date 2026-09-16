@@ -11,9 +11,52 @@ declare global {
 // ============================================================
 // CONFIG — Ajustar antes de deployar
 // ============================================================
-const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
+const WHATSAPP_NUMERO = "559180194075"; // E.164, sem +
+
+// 4 ofertas em teste. Cada lead cai em UMA delas (25% cada) e a mensagem
+// pré-preenchida é o gatilho do fluxo na automação. Mantém as 4 distintas.
+const OFERTAS = [
+  { id: 1, mensagem: "QUERO O BILHETE 1" },
+  { id: 2, mensagem: "QUERO O BILHETE 2" },
+  { id: 3, mensagem: "QUERO O BILHETE 3" },
+  { id: 4, mensagem: "QUERO O BILHETE 4" },
+];
+
 const LOADING_MS = 1000; // tempo do loading antes de redirecionar
+const STORAGE_KEY = "odd100_oferta"; // guarda a oferta sorteada no navegador
 // ============================================================
+
+type Oferta = (typeof OFERTAS)[number];
+
+/**
+ * Decide a oferta do visitante, nesta ordem:
+ * 1. ?oferta=N na URL (força uma oferta, útil pra testar)
+ * 2. Oferta já sorteada antes neste navegador (mesmo lead, mesma oferta)
+ * 3. Sorteio uniforme entre as 4 (1/4 cada), gravado pra próxima visita
+ */
+function escolherOferta(): Oferta {
+  const porId = (n: number) => OFERTAS.find((o) => o.id === n);
+
+  const param = Number(new URLSearchParams(window.location.search).get("oferta"));
+  const forcada = porId(param);
+  if (forcada) return forcada;
+
+  try {
+    const salva = porId(Number(window.localStorage.getItem(STORAGE_KEY)));
+    if (salva) return salva;
+  } catch {}
+
+  const idx = Math.floor(Math.random() * OFERTAS.length);
+  const sorteada = OFERTAS[idx];
+  try {
+    window.localStorage.setItem(STORAGE_KEY, String(sorteada.id));
+  } catch {}
+  return sorteada;
+}
+
+function montarLink(oferta: Oferta) {
+  return `https://wa.me/${WHATSAPP_NUMERO}?text=${encodeURIComponent(oferta.mensagem)}`;
+}
 
 function WhatsIcon() {
   return (
@@ -33,13 +76,20 @@ export default function Page() {
     if (loading) return;
     setLoading(true);
 
-    // Dispara evento Lead no Meta Pixel antes do redirect
-    if (typeof window !== "undefined" && window.fbq) {
-      window.fbq("track", "Lead", { content_name: "Bilhete Odd 100 WhatsApp" });
+    const oferta = escolherOferta();
+    const url = montarLink(oferta);
+
+    // Dispara evento Lead no Meta Pixel antes do redirect, com a oferta
+    // sorteada, pra dar pra quebrar o resultado por oferta no Gerenciador
+    if (window.fbq) {
+      window.fbq("track", "Lead", {
+        content_name: `Bilhete Odd 100 - Oferta ${oferta.id}`,
+        content_category: `oferta_${oferta.id}`,
+      });
     }
 
     setTimeout(() => {
-      window.location.href = WHATSAPP_URL;
+      window.location.href = url;
     }, LOADING_MS);
   };
 
