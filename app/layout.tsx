@@ -3,8 +3,8 @@ import Script from "next/script";
 import { Anton, Barlow, Russo_One } from "next/font/google";
 import "./globals.css";
 
-// Meta Pixel — conta FREECAUMO (Mateus)
-const META_PIXEL_ID = "23904277939190271";
+// Meta Pixel — ESPORTIVABET - DIRETO
+const META_PIXEL_ID = "2392917637871836";
 
 const anton = Anton({
   weight: "400",
