@@ -11,46 +11,9 @@ declare global {
 // ============================================================
 // CONFIG — Ajustar antes de deployar
 // ============================================================
-// 4 ofertas em teste. Cada lead cai em UMA delas (25% cada). Cada link
-// abre o WhatsApp com uma mensagem diferente, que é o gatilho do fluxo.
-const OFERTAS = [
-  { id: 1, link: "https://wa.link/s8vnpg" },
-  { id: 2, link: "https://wa.link/hgodgk" },
-  { id: 3, link: "https://wa.link/tggx72" },
-  { id: 4, link: "https://wa.link/huy6or" },
-];
-
+const WHATSAPP_URL = "https://wa.me/559180194075?text=QUERO%20O%20BILHETE";
 const LOADING_MS = 1000; // tempo do loading antes de redirecionar
-const STORAGE_KEY = "odd100_oferta"; // guarda a oferta sorteada no navegador
 // ============================================================
-
-type Oferta = (typeof OFERTAS)[number];
-
-/**
- * Decide a oferta do visitante, nesta ordem:
- * 1. ?oferta=N na URL (força uma oferta, útil pra testar)
- * 2. Oferta já sorteada antes neste navegador (mesmo lead, mesma oferta)
- * 3. Sorteio uniforme entre as 4 (1/4 cada), gravado pra próxima visita
- */
-function escolherOferta(): Oferta {
-  const porId = (n: number) => OFERTAS.find((o) => o.id === n);
-
-  const param = Number(new URLSearchParams(window.location.search).get("oferta"));
-  const forcada = porId(param);
-  if (forcada) return forcada;
-
-  try {
-    const salva = porId(Number(window.localStorage.getItem(STORAGE_KEY)));
-    if (salva) return salva;
-  } catch {}
-
-  const idx = Math.floor(Math.random() * OFERTAS.length);
-  const sorteada = OFERTAS[idx];
-  try {
-    window.localStorage.setItem(STORAGE_KEY, String(sorteada.id));
-  } catch {}
-  return sorteada;
-}
 
 function WhatsIcon() {
   return (
@@ -70,20 +33,13 @@ export default function Page() {
     if (loading) return;
     setLoading(true);
 
-    const oferta = escolherOferta();
-    const url = oferta.link;
-
-    // Dispara evento Lead no Meta Pixel antes do redirect, com a oferta
-    // sorteada, pra dar pra quebrar o resultado por oferta no Gerenciador
-    if (window.fbq) {
-      window.fbq("track", "Lead", {
-        content_name: `Bilhete Odd 100 - Oferta ${oferta.id}`,
-        content_category: `oferta_${oferta.id}`,
-      });
+    // Dispara evento Lead no Meta Pixel antes do redirect
+    if (typeof window !== "undefined" && window.fbq) {
+      window.fbq("track", "Lead", { content_name: "Bilhete Odd 100 WhatsApp" });
     }
 
     setTimeout(() => {
-      window.location.href = url;
+      window.location.href = WHATSAPP_URL;
     }, LOADING_MS);
   };
 
